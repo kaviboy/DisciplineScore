@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "hooks": {
+    "stop": [
+      {
+        "command": ".cursor/hooks/update-apk-final.sh",
+        "timeout": 300
+      }
+    ]
+  }
+}

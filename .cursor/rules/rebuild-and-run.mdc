@@ -1,0 +1,14 @@
+---
+description: Install the debug APK only after a Cursor agent finishes changing the app
+alwaysApply: true
+---
+
+# Rebuild only when changes are final
+
+Do not rebuild or install while a task is still in progress. Intermediate edits stay on disk until the work is done.
+
+When the agent stops, `.cursor/hooks/update-apk-final.sh` checks `app/src` and `core/src`. If those files are newer than the debug APK, it builds once, installs on the emulator, and relaunches `com.disciplinescore.app`. If nothing in the app source changed, it skips the build.
+
+Do not start `.cursor/hooks/apk-watcher.sh` or the `com.disciplinescore.apk-watcher` login service. Do not run a second Gradle build while `/tmp/disciplinescore-apk.lock` exists.
+
+Gradle and `adb` need `JAVA_HOME=/opt/homebrew/opt/openjdk@17` and `ANDROID_HOME=$HOME/Library/Android/sdk`. Start the `DisciplineScore` emulator only when no device is attached.
